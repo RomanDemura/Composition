@@ -8,7 +8,7 @@ interface GameRepository {
 
     fun generateQuestion(
         maxSumValue: Int,
-        coutOfOption: Int
+        countOfOption: Int
     ): Question
 
     fun getGetGameSettings(level: Level): GameSettings
