@@ -1,3 +1,28 @@
 <resources>
     <string name="app_name">Composition</string>
+    <string name="rules_title">Состав числа</string>
+    <string name="rules">\tПравила игры: перед Вами будет три облачка, одно сверху и два снизу, в двух из них будут числа.\n\tНеобходимо, чтобы сумма чисел из двух нижних облачек была равна числу в верхнем, для этого нужно вставить недостающее число.\n\n\tПример: в верхнем облачке число 7, в одном из нижних знак вопроса, а в другом 4. Значит на месте вопросительного знака должно быть число 3, потому что 3 + 4 = 7</string>
+    <string name="btn_next">Понятно</string>
+    <string name="choose_level">Выберите уровень:</string>
+    <string name="level_test">Тестовый</string>
+    <string name="level_easy">Легкий</string>
+    <string name="level_medium">Средний</string>
+    <string name="level_hard">Сложный</string>
+    <string name="answers_progress">Правильных ответов %s (минимум %s)</string>
+    <string name="default_sum">7</string>
+    <string name="default_left_number">4</string>
+    <string name="_1">1</string>
+    <string name="_2">2</string>
+    <string name="_3">3</string>
+    <string name="_4">4</string>
+    <string name="_5">5</string>
+    <string name="_6">6</string>
+    <string name="char_question">\?</string>
+    <string name="default_time">00:00</string>
+    <string name="button_retry">Попробовать снова</string>
+    <string name="required_answers">Необходимое количество правильных ответов: %s</string>
+    <string name="score_answers">Ваш счёт: %s</string>
+    <string name="required_percentage">Необходимый процент правильных ответов: %s</string>
+    <string name="score_percentage">Процент правильных ответов: %s</string>
+    <string name="game_over">Game Over</string>
 </resources>
