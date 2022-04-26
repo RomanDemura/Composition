@@ -5,6 +5,8 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
+import tech.demura.composition.R
+import tech.demura.composition.databinding.FragmentChooseLevelBinding
 import tech.demura.composition.databinding.FragmentWelcomeBinding
 
 class WelcomeFragment: Fragment() {
@@ -23,9 +25,25 @@ class WelcomeFragment: Fragment() {
         return binding.root
     }
 
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        super.onViewCreated(view, savedInstanceState)
+        binding.buttonUnderstand.setOnClickListener{
+            launchChooseLevelFragment()
+        }
+    }
+
+    fun launchChooseLevelFragment(){
+        requireActivity().supportFragmentManager.beginTransaction()
+            .replace(R.id.main_container, ChooseLevelFragment.newInstance())
+            .addToBackStack(ChooseLevelFragment.CHOOSE_LEVEL_FRAGMENT)
+            .commit()
+    }
+
     override fun onDestroyView() {
         super.onDestroyView()
         _binding = null
     }
+
+
 
 }

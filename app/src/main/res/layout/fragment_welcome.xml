@@ -20,7 +20,8 @@
             android:src="@drawable/ic_brain"
             app:layout_constraintTop_toTopOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintEnd_toEndOf="parent" />
+            app:layout_constraintEnd_toEndOf="parent"
+            android:contentDescription="Hello" />
         <TextView
             android:id="@+id/tv_title"
             android:layout_width="match_parent"
