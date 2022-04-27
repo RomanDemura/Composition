@@ -7,6 +7,7 @@ import android.view.View
 import android.view.ViewGroup
 import tech.demura.composition.R
 import tech.demura.composition.databinding.FragmentChooseLevelBinding
+import tech.demura.composition.domain.entity.Level
 
 class ChooseLevelFragment : Fragment() {
 
@@ -22,9 +23,43 @@ class ChooseLevelFragment : Fragment() {
         return binding.root
     }
 
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        super.onViewCreated(view, savedInstanceState)
+        setOnClickListeners()
+    }
+
 
     override fun onDestroyView() {
         super.onDestroyView()
         _binding = null
+    }
+
+    private fun setOnClickListeners(){
+        binding.buttonLevelTest.setOnClickListener{
+            launchGameFragment(Level.TEST)
+        }
+        binding.buttonLevelEasy.setOnClickListener{
+            launchGameFragment(Level.EASY)
+        }
+        binding.buttonLevelMedium.setOnClickListener {
+            launchGameFragment(Level.MEDIUM)
+        }
+        binding.buttonLevelHard.setOnClickListener {
+            launchGameFragment(Level.HARD)
+        }
+    }
+
+    private fun launchGameFragment(level: Level){
+        requireActivity().supportFragmentManager.beginTransaction()
+            .replace(R.id.main_container, GameFragment.newInstance(level))
+            .addToBackStack(GameFragment.GAME_FRAGMENT)
+            .commit()
+    }
+
+    companion object{
+        const val CHOOSE_LEVEL_FRAGMENT = "choose_level_fragment"
+        fun newInstance(): ChooseLevelFragment{
+            return ChooseLevelFragment()
+        }
     }
 }

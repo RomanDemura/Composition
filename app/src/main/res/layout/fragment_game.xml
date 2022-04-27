@@ -7,6 +7,7 @@
     android:layout_height="match_parent"
     tools:context=".presentation.GameFragment">
 
+
     <TextView
         android:id="@+id/tv_timer"
         android:layout_width="wrap_content"
@@ -67,10 +68,9 @@
         android:layout_height="wrap_content"
         android:layout_margin="16dp"
         android:text="@string/answers_progress"
-        app:layout_constraintBottom_toTopOf=""
+        app:layout_constraintBottom_toTopOf="@id/progress_bar"
         app:layout_constraintTop_toBottomOf="@id/tv_left_number"
-        app:layout_constraintVertical_chainStyle="spread"
-        tools:layout_editor_absoluteX="16dp" />
+        app:layout_constraintVertical_chainStyle="spread" />
 
     <ProgressBar
         android:id="@+id/progress_bar"
@@ -85,6 +85,7 @@
 
 
 <!--Options-->
+
     <TextView
         android:id="@+id/option1"
         style="@style/OptionTextStyle"
@@ -161,7 +162,6 @@
         app:layout_constraintTop_toTopOf="@id/option4"
         app:layout_constraintBottom_toBottomOf="@id/option4"
         />
-
 
 
 </androidx.constraintlayout.widget.ConstraintLayout>
