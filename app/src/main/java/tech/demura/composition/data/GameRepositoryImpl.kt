@@ -10,7 +10,7 @@ import kotlin.random.Random
 
 object GameRepositoryImpl : GameRepository {
 
-    private const val MIN_SUM_VALUE = 2
+    private const val MIN_SUM_VALUE = 15
     private const val MIN_ANSWER_VALUE = 1
 
     override fun generateQuestion(maxSumValue: Int, countOfOption: Int): Question {
@@ -19,8 +19,8 @@ object GameRepositoryImpl : GameRepository {
         val rightAnswer = sumValue - visibleValue
         val options = HashSet<Int>()
         options.add(rightAnswer)
-        val from = min(MIN_ANSWER_VALUE, rightAnswer - countOfOption)
-        val to = max(sumValue, rightAnswer + countOfOption)
+        val from = max(MIN_ANSWER_VALUE, rightAnswer - countOfOption)
+        val to = min(sumValue, rightAnswer + countOfOption)
         while (options.size < countOfOption) {
             options.add(Random.nextInt(from, to))
         }
@@ -30,9 +30,9 @@ object GameRepositoryImpl : GameRepository {
     override fun getGetGameSettings(level: Level): GameSettings {
          return when (level) {
             Level.TEST -> GameSettings(
-                10,
+                25,
                 2,
-                0,
+                10,
                 8
             )
             Level.EASY -> GameSettings(
