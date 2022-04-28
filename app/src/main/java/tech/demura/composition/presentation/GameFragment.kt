@@ -18,20 +18,17 @@ import tech.demura.composition.domain.entity.Level
 
 class GameFragment : Fragment() {
 
+    private val viewModelGameFactory by lazy {
+        GameViewModelFactory(requireActivity().application, level)
+    }
+
     private val viewModelGameFragment by lazy {
-        ViewModelProvider(
-            this,
-            ViewModelProvider
-                .AndroidViewModelFactory(
-                    requireActivity()
-                    .application
-                )
-        )[ViewModelGameFragment::class.java]
+        ViewModelProvider(this, viewModelGameFactory)[ViewModelGameFragment::class.java]
     }
 
     private val tvOptions by lazy {
         mutableListOf<TextView>().apply {
-            with(binding){
+            with(binding) {
                 add(option1)
                 add(option2)
                 add(option3)
@@ -63,7 +60,6 @@ class GameFragment : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        viewModelGameFragment.startGame(level)
         setOnClickListeners()
         setObservers()
     }
@@ -73,52 +69,52 @@ class GameFragment : Fragment() {
         _bindind = null
     }
 
-    private fun setOnClickListeners(){
+    private fun setOnClickListeners() {
         for (option in tvOptions) {
             option.setOnClickListener { viewModelGameFragment.chooseAnswer(option.text.toString()) }
         }
     }
 
-    private fun setObservers(){
+    private fun setObservers() {
         //Options
-        viewModelGameFragment.question.observe(viewLifecycleOwner){
+        viewModelGameFragment.question.observe(viewLifecycleOwner) {
             binding.tvSum.text = it.sum.toString()
             binding.tvLeftNumber.text = it.visibleNumber.toString()
-            for ((index, option) in tvOptions.withIndex()){
+            for ((index, option) in tvOptions.withIndex()) {
                 option.text = it.options[index].toString()
             }
         }
         //Timer
-        viewModelGameFragment.formattedTimer.observe(viewLifecycleOwner){
+        viewModelGameFragment.formattedTimer.observe(viewLifecycleOwner) {
             binding.tvTimer.text = it
         }
         //Progress answers
-        viewModelGameFragment.progressAnswers.observe(viewLifecycleOwner){
+        viewModelGameFragment.progressAnswers.observe(viewLifecycleOwner) {
             binding.tvAnswersProgress.text = it
         }
-        viewModelGameFragment.enoughtCountOfRightAnswers.observe(viewLifecycleOwner){
+        viewModelGameFragment.enoughtCountOfRightAnswers.observe(viewLifecycleOwner) {
             val color = getColorByState(it)
             binding.tvAnswersProgress.setTextColor(color)
         }
         //Progress Bar
-        viewModelGameFragment.minPercentOfRightAnswers.observe(viewLifecycleOwner){
+        viewModelGameFragment.minPercentOfRightAnswers.observe(viewLifecycleOwner) {
             binding.progressBar.secondaryProgress = it
         }
-        viewModelGameFragment.percentOfRightAnswers.observe(viewLifecycleOwner){
+        viewModelGameFragment.percentOfRightAnswers.observe(viewLifecycleOwner) {
             binding.progressBar.setProgress(it, true)
         }
-        viewModelGameFragment.enoughtPercentOfRightAnswers.observe(viewLifecycleOwner){
+        viewModelGameFragment.enoughtPercentOfRightAnswers.observe(viewLifecycleOwner) {
             val color = getColorByState(it)
             binding.progressBar.progressTintList = ColorStateList.valueOf(color)
         }
         //Finished
-        viewModelGameFragment.gameResult.observe(viewLifecycleOwner){
+        viewModelGameFragment.gameResult.observe(viewLifecycleOwner) {
             launchGameFinishedFragment(it)
         }
     }
 
-    private fun getColorByState(state: Boolean): Int{
-        val resColor = if (state){
+    private fun getColorByState(state: Boolean): Int {
+        val resColor = if (state) {
             android.R.color.holo_green_light
         } else {
             android.R.color.holo_red_light

@@ -5,6 +5,7 @@ import android.os.CountDownTimer
 import androidx.lifecycle.AndroidViewModel
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
+import androidx.lifecycle.ViewModel
 import tech.demura.composition.R
 import tech.demura.composition.data.GameRepositoryImpl
 import tech.demura.composition.domain.entity.GameResult
@@ -14,17 +15,18 @@ import tech.demura.composition.domain.entity.Question
 import tech.demura.composition.domain.usecases.GenerateQuestionUseCase
 import tech.demura.composition.domain.usecases.GetGameSettingsUseCase
 
-class ViewModelGameFragment(application: Application) : AndroidViewModel(application) {
+class ViewModelGameFragment(application: Application, val level: Level) : ViewModel() {
 
     private val repository = GameRepositoryImpl
-    private lateinit var level: Level
     private lateinit var gameSettings: GameSettings
+    private var timer: CountDownTimer? = null
+
+    private val getGameSettingsUseCase = GetGameSettingsUseCase(repository)
+    private val generateQuestionUseCase = GenerateQuestionUseCase(repository)
 
     private val context = application
     private var countOfAnswers = 0
     private var countOfRightAnswers = 0
-
-    private var timer: CountDownTimer? = null
 
     private var _formattedTimer = MutableLiveData<String>()
     val formattedTimer: LiveData<String>
@@ -58,11 +60,11 @@ class ViewModelGameFragment(application: Application) : AndroidViewModel(applica
     val gameResult: LiveData<GameResult>
         get() = _gameResult
 
-    private val getGameSettingsUseCase = GetGameSettingsUseCase(repository)
-    private val generateQuestionUseCase = GenerateQuestionUseCase(repository)
+    init {
+        startGame()
+    }
 
-    fun startGame(level: Level) {
-        this.level = level
+    fun startGame() {
         gameSettings = getGameSettingsUseCase(level)
         _minPercentOfRightAnswers.value = gameSettings.minPercentOfRightAnswers
         generateQuestion()
