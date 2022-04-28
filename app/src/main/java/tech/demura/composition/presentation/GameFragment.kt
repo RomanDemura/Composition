@@ -10,6 +10,7 @@ import android.view.ViewGroup
 import android.widget.TextView
 import androidx.core.content.ContextCompat
 import androidx.lifecycle.ViewModelProvider
+import androidx.navigation.fragment.findNavController
 import tech.demura.composition.R
 import tech.demura.composition.databinding.FragmentGameBinding
 import tech.demura.composition.domain.entity.GameResult
@@ -129,19 +130,23 @@ class GameFragment : Fragment() {
     }
 
     private fun launchGameFinishedFragment(gameResult: GameResult) {
-        requireActivity().supportFragmentManager.beginTransaction()
-            .replace(
-                R.id.main_container, GameFinishedFragment.newInstance(
-                    gameResult
-                )
-            )
-            .addToBackStack(GameFinishedFragment.GAME_FINISHED_FRAGMENT)
-            .commit()
+        val bundle = Bundle().apply {
+            putParcelable(GameFinishedFragment.KEY_GAME_RESULT, gameResult)
+        }
+        findNavController().navigate(R.id.action_gameFragment_to_gameFinishedFragment, bundle)
+//        requireActivity().supportFragmentManager.beginTransaction()
+//            .replace(
+//                R.id.main_container, GameFinishedFragment.newInstance(
+//                    gameResult
+//                )
+//            )
+//            .addToBackStack(GameFinishedFragment.GAME_FINISHED_FRAGMENT)
+//            .commit()
     }
 
     companion object {
         const val GAME_FRAGMENT = "game_fragment"
-        private const val KEY_LEVEL = "level"
+        val KEY_LEVEL = "level"
 
         fun newInstance(level: Level): GameFragment {
             return GameFragment().apply {
