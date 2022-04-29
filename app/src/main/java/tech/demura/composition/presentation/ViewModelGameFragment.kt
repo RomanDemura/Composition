@@ -2,7 +2,6 @@ package tech.demura.composition.presentation
 
 import android.app.Application
 import android.os.CountDownTimer
-import androidx.lifecycle.AndroidViewModel
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
@@ -15,7 +14,7 @@ import tech.demura.composition.domain.entity.Question
 import tech.demura.composition.domain.usecases.GenerateQuestionUseCase
 import tech.demura.composition.domain.usecases.GetGameSettingsUseCase
 
-class ViewModelGameFragment(application: Application, val level: Level) : ViewModel() {
+class ViewModelGameFragment(application: Application, private val level: Level) : ViewModel() {
 
     private val repository = GameRepositoryImpl
     lateinit var gameSettings: GameSettings
@@ -25,8 +24,8 @@ class ViewModelGameFragment(application: Application, val level: Level) : ViewMo
     private val generateQuestionUseCase = GenerateQuestionUseCase(repository)
 
     private val context = application
-    var countOfAnswers = 0
-    var countOfRightAnswers = 0
+    private var countOfAnswers = 0
+    private var countOfRightAnswers = 0
 
     private var _formattedTimer = MutableLiveData<String>()
     val formattedTimer: LiveData<String>
@@ -44,11 +43,11 @@ class ViewModelGameFragment(application: Application, val level: Level) : ViewMo
     val progressAnswers: LiveData<String>
         get() = _progressAnswers
 
-    private var _enoughtCountOfRightAnswers = MutableLiveData<Boolean>(false)
+    private var _enoughtCountOfRightAnswers = MutableLiveData<Boolean>()
     val enoughtCountOfRightAnswers: LiveData<Boolean>
         get() = _enoughtCountOfRightAnswers
 
-    private var _enoughtPercentOfRightAnswers = MutableLiveData<Boolean>(false)
+    private var _enoughtPercentOfRightAnswers = MutableLiveData<Boolean>()
     val enoughtPercentOfRightAnswers: LiveData<Boolean>
         get() = _enoughtPercentOfRightAnswers
 
@@ -64,7 +63,7 @@ class ViewModelGameFragment(application: Application, val level: Level) : ViewMo
         startGame()
     }
 
-    fun startGame() {
+    private fun startGame() {
         gameSettings = getGameSettingsUseCase(level)
         _minPercentOfRightAnswers.value = gameSettings.minPercentOfRightAnswers
         generateQuestion()
@@ -106,8 +105,8 @@ class ViewModelGameFragment(application: Application, val level: Level) : ViewMo
         )
     }
 
-    fun chooseAnswer(answer: String) {
-        val answer = answer.toInt()
+    fun chooseAnswer(answerStr: String) {
+        val answer = answerStr.toInt()
         val rightAnswer = question.value?.rightAnswer
         if (answer == rightAnswer)
             countOfRightAnswers++

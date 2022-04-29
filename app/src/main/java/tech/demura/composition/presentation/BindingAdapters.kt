@@ -65,21 +65,11 @@ fun sum(textView: TextView, number: Int) {
     textView.text = number.toString()
 }
 
-@BindingAdapter("answersProgress")
-fun answerProgress(textView: TextView, viewModel: ViewModelGameFragment) {
-    textView.text = String.format(
-        textView.context.getString(R.string.answers_progress),
-        viewModel.progressAnswers.value,
-        viewModel.gameSettings.minCountOfRightAnswers
-    )
-}
-
 @BindingAdapter("enoughProgress")
 fun enoughProgress(textView: TextView, enough: Boolean) {
     val color = getColorByState(textView.context, enough)
     textView.setTextColor(color)
 }
-
 
 @BindingAdapter("setProgress")
 fun setProgress(progressBar: ProgressBar, progress: Int) {
