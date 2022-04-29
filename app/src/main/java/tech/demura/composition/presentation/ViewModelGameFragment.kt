@@ -18,15 +18,15 @@ import tech.demura.composition.domain.usecases.GetGameSettingsUseCase
 class ViewModelGameFragment(application: Application, val level: Level) : ViewModel() {
 
     private val repository = GameRepositoryImpl
-    private lateinit var gameSettings: GameSettings
+    lateinit var gameSettings: GameSettings
     private var timer: CountDownTimer? = null
 
     private val getGameSettingsUseCase = GetGameSettingsUseCase(repository)
     private val generateQuestionUseCase = GenerateQuestionUseCase(repository)
 
     private val context = application
-    private var countOfAnswers = 0
-    private var countOfRightAnswers = 0
+    var countOfAnswers = 0
+    var countOfRightAnswers = 0
 
     private var _formattedTimer = MutableLiveData<String>()
     val formattedTimer: LiveData<String>
@@ -103,7 +103,7 @@ class ViewModelGameFragment(application: Application, val level: Level) : ViewMo
             countOfRightAnswers = countOfRightAnswers,
             countOfQuestions = countOfAnswers,
             gameSettings = gameSettings
-            )
+        )
     }
 
     fun chooseAnswer(answer: String) {
@@ -116,20 +116,21 @@ class ViewModelGameFragment(application: Application, val level: Level) : ViewMo
         generateQuestion()
     }
 
-    private fun updateProgress(){
+    private fun updateProgress() {
         _percentOfRightAnswers.value = calculatePercentOfRightAnswers()
         _progressAnswers.value = String.format(
             context.resources.getString(R.string.answers_progress),
             countOfRightAnswers,
             gameSettings.minCountOfRightAnswers
         )
-        _enoughtCountOfRightAnswers.value = countOfRightAnswers >= gameSettings.minCountOfRightAnswers
+        _enoughtCountOfRightAnswers.value =
+            countOfRightAnswers >= gameSettings.minCountOfRightAnswers
         percentOfRightAnswers.value?.let {
             _enoughtPercentOfRightAnswers.value = it >= gameSettings.minPercentOfRightAnswers
         }
     }
 
-    private fun calculatePercentOfRightAnswers(): Int{
+    private fun calculatePercentOfRightAnswers(): Int {
         return if (countOfAnswers == 0)
             0
         else

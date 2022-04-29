@@ -36,7 +36,7 @@ class GameFinishedFragment : Fragment() {
         _binding = null
     }
 
-    private fun setRetryLinsteners(){
+    private fun setRetryLinsteners() {
         binding.buttonRetry.setOnClickListener { retryGame() }
     }
 
