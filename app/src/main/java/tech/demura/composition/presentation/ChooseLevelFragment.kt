@@ -29,17 +29,16 @@ class ChooseLevelFragment : Fragment() {
         setOnClickListeners()
     }
 
-
     override fun onDestroyView() {
         super.onDestroyView()
         _binding = null
     }
 
-    private fun setOnClickListeners(){
-        binding.buttonLevelTest.setOnClickListener{
+    private fun setOnClickListeners() {
+        binding.buttonLevelTest.setOnClickListener {
             launchGameFragment(Level.TEST)
         }
-        binding.buttonLevelEasy.setOnClickListener{
+        binding.buttonLevelEasy.setOnClickListener {
             launchGameFragment(Level.EASY)
         }
         binding.buttonLevelMedium.setOnClickListener {
@@ -50,18 +49,10 @@ class ChooseLevelFragment : Fragment() {
         }
     }
 
-    private fun launchGameFragment(level: Level){
-        findNavController().navigate(ChooseLevelFragmentDirections.actionChooseLevelFragmentToGameFragment(level))
-//        requireActivity().supportFragmentManager.beginTransaction()
-//            .replace(R.id.main_container, GameFragment.newInstance(level))
-//            .addToBackStack(GameFragment.GAME_FRAGMENT)
-//            .commit()
+    private fun launchGameFragment(level: Level) {
+        findNavController().navigate(
+            ChooseLevelFragmentDirections.actionChooseLevelFragmentToGameFragment( level )
+        )
     }
 
-    companion object{
-        const val CHOOSE_LEVEL_FRAGMENT = "choose_level_fragment"
-        fun newInstance(): ChooseLevelFragment{
-            return ChooseLevelFragment()
-        }
-    }
 }
