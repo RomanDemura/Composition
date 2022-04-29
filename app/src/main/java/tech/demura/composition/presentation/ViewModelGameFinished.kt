@@ -7,6 +7,7 @@ import androidx.lifecycle.AndroidViewModel
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
+import androidx.navigation.fragment.navArgs
 import tech.demura.composition.R
 import tech.demura.composition.domain.entity.GameResult
 import tech.demura.composition.domain.entity.GameSettings
@@ -42,6 +43,7 @@ class ViewModelGameFinished(application: Application) : AndroidViewModel(applica
         this.gameResult = gameResult
         gameSettings = gameResult.gameSettings
         setLiveDatas()
+
     }
 
     private fun getEmoji(): Int {

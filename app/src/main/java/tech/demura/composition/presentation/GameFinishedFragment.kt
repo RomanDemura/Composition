@@ -8,6 +8,7 @@ import android.view.ViewGroup
 import androidx.activity.OnBackPressedCallback
 import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.fragment.findNavController
+import androidx.navigation.fragment.navArgs
 import tech.demura.composition.R
 import tech.demura.composition.databinding.FragmentGameFinishedBinding
 import tech.demura.composition.domain.entity.GameResult
@@ -15,11 +16,11 @@ import kotlin.properties.Delegates
 
 class GameFinishedFragment : Fragment() {
 
+    private val args by navArgs<GameFinishedFragmentArgs>()
+
     private var _binding: FragmentGameFinishedBinding? = null
     private val binding: FragmentGameFinishedBinding
         get() = _binding ?: throw RuntimeException("FragmentGameFinishedBinding == null")
-
-    private lateinit var gameResult: GameResult
 
     private val viewModelGameFinished by lazy {
         ViewModelProvider(
@@ -30,10 +31,10 @@ class GameFinishedFragment : Fragment() {
         )[ViewModelGameFinished::class.java]
     }
 
-    override fun onCreate(savedInstanceState: Bundle?) {
-        super.onCreate(savedInstanceState)
-        parseArguments()
-    }
+//    override fun onCreate(savedInstanceState: Bundle?) {
+//        super.onCreate(savedInstanceState)
+//        parseArguments()
+//    }
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -45,7 +46,7 @@ class GameFinishedFragment : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        viewModelGameFinished.setParams(gameResult)
+        viewModelGameFinished.setParams(args.gameResult)
         setRetryLinsteners()
         setObservers()
     }
@@ -55,11 +56,11 @@ class GameFinishedFragment : Fragment() {
         _binding = null
     }
 
-    private fun parseArguments() {
-        requireArguments().getParcelable<GameResult>(KEY_GAME_RESULT)?.let {
-            gameResult = it
-        }
-    }
+//    private fun parseArguments() {
+//        requireArguments().getParcelable<GameResult>(KEY_GAME_RESULT)?.let {
+//            gameResult = it
+//        }
+//    }
 
     private fun setRetryLinsteners(){
         binding.buttonRetry.setOnClickListener { retryGame() }
@@ -87,19 +88,17 @@ class GameFinishedFragment : Fragment() {
         }
     }
 
-    companion object {
-        const val GAME_FINISHED_FRAGMENT = "game_finished_fragment"
-        const val KEY_GAME_RESULT = "game_result"
-
-        fun newInstance(gameResult: GameResult): GameFinishedFragment {
-            return GameFinishedFragment().apply {
-                arguments = Bundle().apply {
-                    putParcelable(KEY_GAME_RESULT, gameResult)
-                }
-            }
-        }
-
-
-    }
+//    companion object {
+//        const val GAME_FINISHED_FRAGMENT = "game_finished_fragment"
+//        const val KEY_GAME_RESULT = "game_result"
+//
+//        fun newInstance(gameResult: GameResult): GameFinishedFragment {
+//            return GameFinishedFragment().apply {
+//                arguments = Bundle().apply {
+//                    putParcelable(KEY_GAME_RESULT, gameResult)
+//                }
+//            }
+//        }
+//    }
 
 }
